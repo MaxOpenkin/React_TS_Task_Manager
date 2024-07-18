@@ -66,17 +66,14 @@
 // export default UserDetails;
 
 import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "../redux/store";
-import { selectUser } from "../redux/usersSlice";
+import { RootState } from "../redux/store";
 
 const UserDetails: FC = () => {
-  const { users, idSelectedUser } = useSelector(
-    (state: RootState) => state.persons
-  );
-  const { street, city, geo, suite, zipcode } = users[idSelectedUser - 1]
-    .address as {
+  const { users } = useSelector((state: RootState) => state.persons);
+  const { id } = useParams() as { id: string };
+  const { street, city, geo, suite, zipcode } = users[+id - 1].address as {
     street: string;
     suite: string;
     city: string;
@@ -87,10 +84,6 @@ const UserDetails: FC = () => {
     };
   };
 
-  const { id } = useParams();
-  console.log(id);
-  const dispatch: AppDispatch = useDispatch();
-
   const navigate = useNavigate();
   return (
     <div className="container mt-4 d-flex justify-content-center">
@@ -99,24 +92,24 @@ const UserDetails: FC = () => {
         style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)", width: "400px" }}
       >
         <div className="card-body text-center">
-          <h1 className="text-center mb-4">{users[idSelectedUser - 1].name}</h1>
+          <h1 className="text-center mb-4">{users[+id - 1].name}</h1>
           <p>
-            <strong>Company:</strong> {users[idSelectedUser - 1].company.name}
+            <strong>Company:</strong> {users[+id - 1].company.name}
           </p>
           <p>
-            <strong>Phone:</strong> {users[idSelectedUser - 1].phone}
+            <strong>Phone:</strong> {users[+id - 1].phone}
           </p>
           <p>
-            <strong>Email:</strong> {users[idSelectedUser - 1].email}
+            <strong>Email:</strong> {users[+id - 1].email}
           </p>
           <p>
             <strong>Website:</strong>{" "}
             <a
-              href={`http://${users[idSelectedUser - 1].website}`}
+              href={`http://${users[+id - 1].website}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {users[idSelectedUser - 1].website}
+              {users[+id - 1].website}
             </a>
           </p>
           <h5 className="mt-4">Address:</h5>
@@ -141,7 +134,6 @@ const UserDetails: FC = () => {
           {/* <NavLink to='/users'> */}
           <button
             onClick={() => {
-              dispatch(selectUser(0));
               navigate("/users");
             }}
             className="btn btn-secondary mt-3"
