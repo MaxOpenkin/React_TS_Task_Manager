@@ -1,22 +1,22 @@
-// import React from 'react'
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import UserDetails from "./UserDetails";
-import { useState } from "react";
 import { addUser } from "../redux/usersSlice";
 import UserFC from "./UserFC";
+import { useParams } from "react-router-dom";
 
 const UserListFC = () => {
-  const { users, status, idSelectedUser } = useSelector(
-    (state: RootState) => state.persons
-  );
+  const { users, status } = useSelector((state: RootState) => state.persons);
   const dispatch: AppDispatch = useDispatch();
 
   const [userName, setUserName] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
 
-  return idSelectedUser ? (
+  const { id } = useParams();
+
+  return id ? (
     <UserDetails />
   ) : (
     <div className="container mt-4">
@@ -55,7 +55,7 @@ const UserListFC = () => {
                 company: {
                   name: companyName,
                 },
-                phone: phone,
+                phone,
               })
             )
           }
@@ -71,7 +71,7 @@ const UserListFC = () => {
           </div>
         )}
         {status === "success" &&
-          users.map((user, index) => <UserFC key={index} user={user} />)}
+          users.map((user) => <UserFC key={user.id} user={user} />)}
         {status === "error" && <>Error!</>}
       </div>
     </div>

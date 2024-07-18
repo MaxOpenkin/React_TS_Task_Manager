@@ -16,12 +16,12 @@ export interface ITask {
   updatedAt: Date;
 }
 
-export interface ITaskState {
+export interface ITasksState {
   tasks: ITask[];
   status: "loading" | "success" | "error";
 }
 
-const initialState: ITaskState = {
+const initialState: ITasksState = {
   tasks: [],
   status: "loading",
 };

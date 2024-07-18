@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 import { RootState } from "./store";
+import axios from "axios";
 
 export interface IUser {
   id: number;
@@ -21,13 +21,13 @@ export interface IUser {
   };
 }
 
-export interface IUserState {
+export interface IUsersState {
   users: IUser[];
   status: "loading" | "success" | "error";
   idSelectedUser: number;
 }
 
-const initialState: IUserState = {
+const initialState: IUsersState = {
   users: [],
   status: "loading",
   idSelectedUser: 0,
@@ -65,18 +65,13 @@ const usersSlice = createSlice({
         );
       }
     },
-    selectUser(state, action: PayloadAction<number>) {
-      state.idSelectedUser = action.payload;
-    },
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(
-        fetchUsers.fulfilled,
-        (state, action: PayloadAction<IUser[]>) => {
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<IUser[]>) => {
           state.users = action.payload;
           state.status = "success";
         }
@@ -87,6 +82,6 @@ const usersSlice = createSlice({
   },
 });
 
-export const { addUser, deleteUser, editUser, selectUser } = usersSlice.actions;
+export const { addUser, deleteUser, editUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

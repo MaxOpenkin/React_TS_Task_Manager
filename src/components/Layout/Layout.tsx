@@ -1,10 +1,21 @@
-// import React from "react";
 import { Outlet } from "react-router-dom";
 import Navigation from "./Navigation";
+// import { useEffect } from 'react'
+// import { selectUser } from '../redux/usersSlice';
+// import { AppDispatch } from '../redux/store';
+// import { useDispatch } from 'react-redux';
 
 // rafce
 const Layout = () => {
-  // 2. Прослойка, которая всегда отображает навигацию, и контент, в зависимости от адреса
+  // const { id } = useParams();
+  // const dispatch: AppDispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(selectUser(+id))
+  //   }
+  // }, [id])
+
   return (
     <div>
       <Navigation />
