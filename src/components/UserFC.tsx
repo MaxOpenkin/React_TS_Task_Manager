@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteUser, editUser, IUser } from "../redux/usersSlice";
 import { NavLink } from "react-router-dom";
@@ -15,6 +15,14 @@ const UserFC: FC<IProps> = ({ user }) => {
   const [phone, setPhone] = useState<string>("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEdit) {
+      setUserName(user.name);
+      setCompanyName(user.company.name);
+      setPhone(user.phone);
+    }
+  }, [isEdit, user.name, user.company.name, user.phone]);
 
   // const { id } = useParams();
 

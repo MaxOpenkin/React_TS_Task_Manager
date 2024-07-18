@@ -33,6 +33,18 @@ const Task: FC<IProps> = ({
     }
   };
 
+
+  const handleCheckboxChange = () => {
+    dispatch(
+      editTask({
+        id: index,
+        title,
+        isCompleted: !isCompleted,
+        updatedAt: new Date(),
+      })
+    );
+  };
+
   return (
     <div
       className={`card mb-3 ${isCompleted ? "bg-light" : ""}`}
@@ -68,14 +80,7 @@ const Task: FC<IProps> = ({
             </small>
             <input
               checked={isCompleted}
-              onChange={() =>
-                editTask({
-                  id: index,
-                  title,
-                  isCompleted: !isCompleted,
-                  updatedAt: new Date(),
-                })
-              }
+              onChange={handleCheckboxChange}
               type="checkbox"
               className="form-check-input me-2"
             />
